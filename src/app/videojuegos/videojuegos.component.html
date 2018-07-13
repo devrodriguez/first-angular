@@ -1,0 +1,10 @@
+<h2>Componente de {{nombre}}</h2>
+<h3 *ngIf="mostrarRetro != true">
+El mejor juego es: {{mejorJuego}}
+</h3>
+<h3 *ngIf="mostrarRetro">
+El mejor juego es: {{mejorJuegoRetro}}
+</h3>
+<ul>
+    <li *ngFor="let juego of videojuegos">{{juego.name}}&nbsp;|&nbsp;<small>{{juego.downloads}}</small></li>
+</ul>
