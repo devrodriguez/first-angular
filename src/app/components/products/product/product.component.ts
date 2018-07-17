@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 
 // Service
 import { ProductService } from '../../../services/product.service';
+import { ToastrService } from 'ngx-toastr';
+
 // Product class
 import { Product } from '../../../models/product';
 
@@ -13,7 +15,7 @@ import { Product } from '../../../models/product';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.productService.getProducts();
@@ -21,8 +23,18 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmit(productForm: NgForm) {
-    this.productService.insertProduct(productForm.value);
+    let message: string = '';
+
+    if(productForm.value.$key == null) {
+      this.productService.insertProduct(productForm.value);
+      message = 'Libro creado';
+    }
+    else {
+      this.productService.updateProduct(productForm.value);
+      message = 'Libro actualizado';
+    }
     this.resetForm(productForm);
+    this.toastr.success(message, 'Success');
   }
 
   resetForm(productForm?: NgForm) {
